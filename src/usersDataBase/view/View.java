@@ -3,11 +3,12 @@ package usersDataBase.view;
 import usersDataBase.model.User;
 import usersDataBase.presenter.Presenter;
 import usersDataBase.util.Commands;
+
 import java.util.Scanner;
 
 public class View {
-    Presenter presenter;
-    Scanner in;
+    private Presenter presenter;
+    private Scanner in;
 
     public View() {
         this.presenter = new Presenter();
@@ -15,9 +16,9 @@ public class View {
     }
 
 
-    public void run(){
+    public void run() {
         Commands com;
-        while(true){
+        while (true) {
             String command = prompt("Enter command: (CREATE/UPDATE/LIST/DELETE/FIND/EXIT)\n").toUpperCase().trim();
             commandValidation(command);
             com = Commands.valueOf(command);
@@ -40,7 +41,7 @@ public class View {
                     break;
                 case LIST:
                     System.out.println("Users list: \n");
-                    for (User user: presenter.getAllUsers()) {
+                    for (User user : presenter.getAllUsers()) {
                         System.out.println(user);
                     }
                     break;
@@ -69,12 +70,11 @@ public class View {
         return in.nextLine();
     }
 
-    private boolean commandValidation(String action){
-        try{
+    private boolean commandValidation(String action) {
+        try {
             Enum.valueOf(Commands.class, action);
             return true;
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Unexpected command! ");
         }
 

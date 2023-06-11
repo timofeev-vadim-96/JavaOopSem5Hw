@@ -40,7 +40,7 @@ public class User {
         Scanner in = new Scanner(System.in);
         int counter = 10;
         String oldPassword = "";
-        while (!oldPassword.equals(this.password)){
+        while (!oldPassword.equals(this.password)) {
             System.out.println("enter current password: \n");
             oldPassword = in.nextLine();
         }
