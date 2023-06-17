@@ -6,6 +6,10 @@ import usersDataBase.util.Commands;
 
 import java.util.Scanner;
 
+/**
+ * метод по валидации команд вынес в отдельный класс с целью не нарушения 1 принципа SOLID
+ */
+
 public class View {
     private Presenter presenter;
     private Scanner in;
@@ -20,7 +24,7 @@ public class View {
         Commands com;
         while (true) {
             String command = prompt("Enter command: (CREATE/UPDATE/LIST/DELETE/FIND/EXIT)\n").toUpperCase().trim();
-            commandValidation(command);
+            presenter.validation(command);
             com = Commands.valueOf(command);
             if (com == Commands.EXIT) return;
             switch (com) {
@@ -64,19 +68,9 @@ public class View {
         }
     }
 
-    private String prompt(String message) {
+    public String prompt(String message) {
         Scanner in = new Scanner(System.in);
         System.out.print(message);
         return in.nextLine();
-    }
-
-    private boolean commandValidation(String action) {
-        try {
-            Enum.valueOf(Commands.class, action);
-            return true;
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Unexpected command! ");
-        }
-
     }
 }

@@ -1,6 +1,9 @@
 package usersDataBase.model;
 
-import java.util.Scanner;
+/**
+ * Переписал класс setPassword с излишней функциональностью (была работа с консолью с проверкой старого пороля), что
+ * как нарушало MVP, так и нарушало принцип единственной ответственности.
+ */
 
 public class User {
     private int id;
@@ -35,16 +38,8 @@ public class User {
     public void setLogin(String login) {
         this.login = login;
     }
-
-    public void setPassword() {
-        Scanner in = new Scanner(System.in);
-        int counter = 10;
-        String oldPassword = "";
-        while (!oldPassword.equals(this.password)) {
-            System.out.println("enter current password: \n");
-            oldPassword = in.nextLine();
-        }
-        this.password = password;
+    public void setPassword(String newPassword){
+        this.password = newPassword;
     }
 
     public int getId() {

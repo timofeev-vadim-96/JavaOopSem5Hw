@@ -6,4 +6,6 @@ public interface Calculator {
     double prod();
     double div();
 
+
+
 }

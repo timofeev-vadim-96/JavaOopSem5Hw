@@ -1,9 +1,8 @@
 package calculator.presenter;
 
-import calculator.model.Calculator;
 import calculator.model.impl.Model;
 
-public class Presenter <T extends Calculator> {
+public class Presenter {
     Model model;
 
     public Presenter() {

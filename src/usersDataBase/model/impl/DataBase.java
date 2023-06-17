@@ -7,8 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class DataBase implements DB<User> {
-    private ArrayList<User> users;
+/**
+ * 1. Нарушался принцип инверсии зависимостей - список "users" изначально был ArrayList при объявлении.
+ * 2. Метод "update" удалял старого пользователя и записывал нового. Это хоть и не нарушение принципов SOLID, но
+ * весьма затратно по сложности исполнения (тем более ArrayList у нас на базе массива, операции изменения размера
+ * массива весьма затратно для памяти), теперь просто переопределяю поля определенного пользователя.
+ */
+public class DataBase implements DB<User, Integer> {
+    private List<User> users;
 
     public DataBase() {
         this.users = new ArrayList<>();
@@ -18,7 +24,7 @@ public class DataBase implements DB<User> {
         if (checkingUnique(user)) users.add(user); // проверка на уникальность нового пользователя
     }
 
-    public void remove(int id) {
+    public void remove(Integer id) {
         boolean flag = true;
         for (int i = 0; i < users.size(); i++) {
             if (id == users.get(i).getId()) {
@@ -31,7 +37,7 @@ public class DataBase implements DB<User> {
     }
 
     @Override
-    public User getById(int id) {
+    public User getById(Integer id) {
         for (User user : users) {
             if (id == user.getId()) {
                 return user;
@@ -61,7 +67,6 @@ public class DataBase implements DB<User> {
         for (User user : users) {
             if (user.getLogin().equals(login)) return user;
         }
-        System.out.println("It is not working");
         throw new NoSuchElementException("A user with this login wasn't found");
     }
 
@@ -70,9 +75,9 @@ public class DataBase implements DB<User> {
         else throw new SecurityException("Wrong password ");
     }
 
-    public void update(User user, int id) {
-        remove(id);
-        user.setId(id);
-        add(user);
+    public void update(User user, Integer id) {
+        getById(id).setName(user.getName());
+        getById(id).setLogin(user.getLogin());
+        getById(id).setPassword(user.getPassword());
     }
 }

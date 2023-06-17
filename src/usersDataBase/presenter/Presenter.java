@@ -1,16 +1,25 @@
 package usersDataBase.presenter;
 
+import usersDataBase.model.DB;
 import usersDataBase.model.User;
 import usersDataBase.model.impl.DataBase;
+import usersDataBase.util.Validator;
+import usersDataBase.util.impl.CommandValidator;
 
 import java.util.InputMismatchException;
 import java.util.List;
 
 public class Presenter {
     private DataBase dataBase;
+    private Validator<String> validator;
 
     public Presenter() {
         this.dataBase = new DataBase();
+        this.validator = new CommandValidator();
+    }
+
+    public boolean validation(String command){
+        return validator.validation(command);
     }
 
     public void createUser(User user) {
